@@ -119,6 +119,9 @@ export const getAllUser = TryCatch(async(req,res)=>{
 })
 
 export const updateRole = TryCatch(async(req,res)=>{
+    if(req.user.mainrole!== "superadmin") return res.status(403).json({
+        message: "Only Superadmin can update roles",
+    })
     const user = await User.findById(req.params.id);
 
     if(user.role === "user"){
